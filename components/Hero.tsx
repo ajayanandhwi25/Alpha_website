@@ -3,6 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { ArrowRight, ShieldCheck, Sparkles, Award, CheckCircle2, ChevronRight, PackageCheck } from "lucide-react";
+import { getAssetPath } from "@/utils/basePath";
 
 export default function Hero() {
   return (
@@ -104,7 +105,7 @@ export default function Hero() {
               
               <div className="relative aspect-[4/3] w-full rounded-2xl overflow-hidden">
                 <Image
-                  src="/images/hero-spices.jpg"
+                  src={getAssetPath("/images/hero-spices.jpg")}
                   alt="Desi Alpha Authentic Indian Spices"
                   fill
                   priority

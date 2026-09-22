@@ -3,6 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { Sparkles, Heart, Award, Users, CheckCircle } from "lucide-react";
+import { getAssetPath } from "@/utils/basePath";
 
 export default function AboutSection() {
   return (
@@ -13,7 +14,7 @@ export default function AboutSection() {
         <div className="lg:col-span-6 relative">
           <div className="relative aspect-[4/3] rounded-3xl overflow-hidden glass-spice-panel p-2 border-2 border-amber-500/30 shadow-2xl">
             <Image
-              src="/images/about-stone-grinding.jpg"
+              src={getAssetPath("/images/about-stone-grinding.jpg")}
               alt="Desi Alpha Traditional Stone Grinding"
               fill
               className="object-cover rounded-2xl"

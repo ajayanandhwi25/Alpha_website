@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { Send, Phone, Mail, MapPin, MessageSquare, CheckCircle2, Clock, Sparkles, Building2, Store } from "lucide-react";
+import { saveInquiry } from "@/data/inquiryStorage";
 
 export default function ContactSection() {
   const [formData, setFormData] = useState({
@@ -24,32 +25,32 @@ export default function ContactSection() {
     setErrorMessage(null);
 
     try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(formData)
+      const result = saveInquiry({
+        name: formData.name,
+        phone: formData.phone,
+        email: formData.email,
+        inquiryType: formData.inquiryType,
+        spiceInterest: formData.spiceInterest,
+        quantityNeeded: formData.quantityNeeded,
+        message: formData.message,
+        status: "New Inquiry"
       });
 
-      const data = await res.json();
-
-      if (res.ok && data.success) {
-        setSuccessData({ id: data.inquiryId, message: data.message });
-        setFormData({
-          name: "",
-          phone: "",
-          email: "",
-          inquiryType: "Wholesale & Distributorship (थोक व एजेंसी)",
-          spiceInterest: "All Spices (सभी मसाले)",
-          quantityNeeded: "500g - 1Kg Packs",
-          message: ""
-        });
-      } else {
-        setErrorMessage(data.error || "Form submit nahi ho paya. Kripya dubara koshish karein.");
-      }
+      setSuccessData({
+        id: result.inquiryId,
+        message: "Aapki inquiry safaltapoorvak darj kar li gayi hai! Desi Alpha team aapse shighra sampark karegi."
+      });
+      setFormData({
+        name: "",
+        phone: "",
+        email: "",
+        inquiryType: "Wholesale & Distributorship (थोक व एजेंसी)",
+        spiceInterest: "All Spices (सभी मसाले)",
+        quantityNeeded: "500g - 1Kg Packs",
+        message: ""
+      });
     } catch {
-      setErrorMessage("Network problem. Kripya internet check karein ya WhatsApp par seedha sampark karein.");
+      setErrorMessage("Kripya internet check karein ya WhatsApp par seedha sampark karein.");
     } finally {
       setLoading(false);
     }

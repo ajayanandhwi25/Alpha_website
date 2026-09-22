@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { useCart } from "./CartContext";
 import { X, Trash2, ShoppingBag, MessageCircle, ArrowRight, CheckCircle2, Sparkles } from "lucide-react";
+import { saveInquiry } from "@/data/inquiryStorage";
 
 export default function CartDrawer() {
   const {
@@ -55,28 +56,20 @@ export default function CartDrawer() {
         .map((it) => `${it.product.name} [${it.variant.weight}] x${it.quantity}`)
         .join(", ");
 
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: customerName,
-          phone: customerPhone,
-          inquiryType: "Online Retail Order",
-          spiceInterest: orderSummaryText,
-          quantityNeeded: `Total ₹${finalTotal} (${totalItemsCount} items)`,
-          message: `Delivery Address: ${customerAddress || "Not specified"}. Order details: ${orderSummaryText}`
-        })
+      const result = saveInquiry({
+        name: customerName,
+        phone: customerPhone,
+        inquiryType: "Online Retail Order",
+        spiceInterest: orderSummaryText,
+        quantityNeeded: `Total ₹${finalTotal} (${totalItemsCount} items)`,
+        message: `Delivery Address: ${customerAddress || "Not specified"}. Order details: ${orderSummaryText}`,
+        status: "New Order"
       });
 
-      const data = await res.json();
-      if (data.success) {
-        setOrderSuccess(data.inquiryId);
-        clearCart();
-      } else {
-        alert(data.error || "Order submit nahi ho paya.");
-      }
+      setOrderSuccess(result.inquiryId);
+      clearCart();
     } catch {
-      alert("Network error. Kripya WhatsApp par seedha order karein.");
+      alert("Kripya WhatsApp par seedha order karein.");
     } finally {
       setIsSubmitting(false);
     }

@@ -24,7 +24,9 @@ export interface Product {
   variants: ProductVariant[];
 }
 
-export const PRODUCTS: Product[] = [
+import { getAssetPath } from "@/utils/basePath";
+
+export const RAW_PRODUCTS: Product[] = [
   {
     id: "haldi-powder",
     name: "Desi Alpha Shuddh Haldi Powder",
@@ -314,6 +316,11 @@ export const PRODUCTS: Product[] = [
     ]
   }
 ];
+
+export const PRODUCTS: Product[] = RAW_PRODUCTS.map((p) => ({
+  ...p,
+  image: getAssetPath(p.image),
+}));
 
 export const CATEGORIES = [
   { id: "all", label: "All Spices (सभी मसाले)" },

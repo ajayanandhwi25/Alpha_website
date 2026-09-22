@@ -1,20 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { X, RefreshCw, MessageSquare, Phone, Calendar, User, Package, Inbox, CheckCircle2 } from "lucide-react";
-
-interface InquiryRecord {
-  id: string;
-  name: string;
-  phone: string;
-  email?: string;
-  inquiryType?: string;
-  spiceInterest?: string;
-  quantityNeeded?: string;
-  message: string;
-  createdAt: string;
-  status: string;
-}
+import { X, RefreshCw, MessageSquare, Phone, Calendar, User, Package, Inbox, CheckCircle2, Trash2 } from "lucide-react";
+import { getInquiries, deleteInquiry, InquiryRecord } from "@/data/inquiryStorage";
 
 interface InquiriesViewerModalProps {
   isOpen: boolean;
@@ -26,22 +14,22 @@ export default function InquiriesViewerModal({ isOpen, onClose }: InquiriesViewe
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchInquiries = async () => {
+  const fetchInquiries = () => {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch("/api/inquiries");
-      const data = await res.json();
-      if (data.success) {
-        setInquiries(data.inquiries || []);
-      } else {
-        setError("Inquiries load nahi ho saki.");
-      }
+      const data = getInquiries();
+      setInquiries(data);
     } catch {
-      setError("Server se data lene me truti aayi.");
+      setError("Data load nahi ho saka.");
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleDelete = (id: string) => {
+    const updated = deleteInquiry(id);
+    setInquiries(updated);
   };
 
   useEffect(() => {
@@ -191,8 +179,16 @@ export default function InquiriesViewerModal({ isOpen, onClose }: InquiriesViewe
                       className="inline-flex items-center gap-1.5 bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 px-3 py-1.5 rounded-lg text-xs font-semibold border border-emerald-500/30"
                     >
                       <MessageSquare className="w-3.5 h-3.5 text-emerald-400" />
-                      <span>WhatsApp Message</span>
+                      <span>WhatsApp</span>
                     </a>
+
+                    <button
+                      onClick={() => handleDelete(inq.id)}
+                      title="Delete Lead"
+                      className="inline-flex items-center gap-1 bg-red-600/10 hover:bg-red-600/20 text-red-400 px-2.5 py-1.5 rounded-lg text-xs font-semibold border border-red-500/20 transition-colors"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
                   </div>
                 </div>
               );
@@ -202,7 +198,7 @@ export default function InquiriesViewerModal({ isOpen, onClose }: InquiriesViewe
 
         {/* Modal Footer */}
         <div className="p-4 border-t border-white/10 bg-zinc-900/60 flex items-center justify-between text-xs text-zinc-400">
-          <span>Data stored securely in <code className="text-amber-400">alpha/data/inquiries.json</code></span>
+          <span>Surakshit Local Leads Portal (Real-time in browser)</span>
           <button
             onClick={onClose}
             className="bg-white/10 hover:bg-white/20 text-white font-bold px-4 py-2 rounded-xl"
