@@ -1,0 +1,37 @@
+[
+  {
+    "id": "DA-719267",
+    "name": "Suresh Patel",
+    "phone": "9876501234",
+    "email": "suresh@patelkirana.com",
+    "inquiryType": "Wholesale & Distributorship (थोक व एजेंसी)",
+    "spiceInterest": "All Spices (सभी मसाले)",
+    "quantityNeeded": "500g - 1Kg Packs",
+    "message": "Mujhe Desi Alpha ke sabhi masalo ke sample aur Mujhe Desi Alpha ke sabhi masalo ke sample aur 10 rs ke ladi pack chahiye.",
+    "createdAt": "2026-09-21T19:08:27.192Z",
+    "status": "New Lead"
+  },
+  {
+    "id": "DA-859383",
+    "name": "Rajesh Sharma",
+    "phone": "9811223344",
+    "email": "rajesh@sharmatraders.in",
+    "inquiryType": "Wholesale & Distributorship",
+    "spiceInterest": "Haldi, Mirch, Garam Masala",
+    "quantityNeeded": "500g - 1Kg Packs",
+    "message": "Need dealership pricing and samples for 10 retail outlets in Lucknow.",
+    "createdAt": "2026-09-21T19:03:38.593Z",
+    "status": "New Lead"
+  },
+  {
+    "id": "DA-1001",
+    "name": "Vikram Singh (Demo Lead)",
+    "phone": "+91 98230 45678",
+    "email": "vikram.singh@example.com",
+    "inquiryType": "Wholesale / Distributorship",
+    "spiceInterest": "Haldi, Mirch & Garam Masala (500g & 1Kg packs)",
+    "message": "We have 12 retail grocery stores in Kanpur and want to take distributorship for Desi Alpha spices.",
+    "createdAt": "2026-09-21T18:30:00.000Z",
+    "status": "Contacted"
+  }
+]
